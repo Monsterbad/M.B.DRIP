@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>M.B DRIP - Catálogo de Franelas</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <header class="cyber-header">
+        <div class="neon-border">
+            <div class="logo-container">
+                <img id="logo-preview" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 150 150'%3E%3Crect width='150' height='150' fill='%23000'/%3E%3Ctext x='75' y='75' text-anchor='middle' dy='.3em' fill='%2300ffff' font-family='Orbitron' font-size='20'%3EM.B%3C/text%3E%3C/svg%3E" alt="Logo" class="logo">
+                <input type="file" id="logo-upload" accept="image/*" class="logo-upload">
+                <button class="upload-btn" onclick="document.getElementById('logo-upload').click()" aria-label="Cambiar logo">
+                    <i class="fas fa-camera"></i>
+                </button>
+            </div>
+            <h1 class="glitch" data-text="M.B DRIP">M.B DRIP </h1>
+        </div>
+    </header>
+
+    <nav class="category-nav">
+        <button class="category-btn active" data-section="individual">
+            <i class="fas fa-user"></i> Individuales
+        </button>
+        <button class="category-btn" data-section="doble">
+            <i class="fas fa-users"></i> Doble Estampado
+        </button>
+        <button class="add-design-btn" onclick="openDesignModal()">
+            <i class="fas fa-palette"></i> Gestionar Diseños
+        </button>
+        <button class="export-btn" onclick="exportCompleteCatalog()">
+            <i class="fas fa-file-pdf"></i> Exportar Catálogo
+        </button>
+    </nav>
+
+    <div class="filters-container">
+        <select id="tipo-diseno" class="filter-select" aria-label="Filtrar por tipo de diseño">
+            <option value="">Todos los diseños</option>
+        </select>
+        <button class="add-product-btn" onclick="openModal()">
+            <i class="fas fa-plus"></i> Agregar Franela
+        </button>
+    </div>
+
+    <div class="stats-container">
+        <h3 class="stats-title">Estadísticas del Catálogo</h3>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number" id="total-products">0</div>
+                <div class="stat-label">Total Franelas</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="individual-count">0</div>
+                <div class="stat-label">Individuales</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="doble-count">0</div>
+                <div class="stat-label">Doble Estampado</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="design-types-count">0</div>
+                <div class="stat-label">Tipos de Diseño</div>
+            </div>
+        </div>
+    </div>
+
+    <main class="catalog-container">
+        <div id="individual-section" class="catalog-section active">
+            <h2 class="section-title">Franelas Individuales</h2>
+            <div class="products-grid" id="individual-grid"></div>
+        </div>
+
+        <div id="doble-section" class="catalog-section">
+            <h2 class="section-title">Doble Estampado</h2>
+            <div class="products-grid" id="doble-grid"></div>
+        </div>
+    </main>
+
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()" aria-label="Cerrar ventana">&times;</span>
+            <h2>Agregar Nueva Franela</h2>
+            <form id="product-form">
+                <label for="product-image">Imagen del Producto:</label>
+                <input type="file" id="product-image" accept="image/*" required>
+                <input type="text" id="product-name" placeholder="Nombre del diseño" required>
+                <select id="product-category" required>
+                    <option value="" disabled selected>Selecciona categoría</option>
+                    <option value="individual">Individual</option>
+                    <option value="doble">Doble Estampado</option>
+                </select>
+                <select id="product-type" required>
+                    <option value="" disabled selected>Selecciona un tipo de diseño</option>
+                </select>
+                <input type="number" id="product-price" placeholder="Precio ($)" step="0.01" min="0" required>
+                <button type="submit" class="submit-btn">Agregar Franela</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="design-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeDesignModal()" aria-label="Cerrar ventana">&times;</span>
+            <h2>Gestionar Tipos de Diseño</h2>
+            <form id="design-form">
+                <input type="text" id="design-name" placeholder="Nuevo tipo de diseño" required>
+                <button type="submit" class="submit-btn">Agregar Tipo</button>
+            </form>
+            <div id="design-list-container">
+                <h3>Diseños Existentes:</h3>
+                <div id="design-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
